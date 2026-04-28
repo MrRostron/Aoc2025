@@ -79,6 +79,7 @@ func (d *Dial) leftTurn(clicks int) {
 //			}
 //		}
 //	}
+// partTwo
 func (d *Dial) rightTurn(clicks int) {
 	for range clicks {
 		d.startPoint++
