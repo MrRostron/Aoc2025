@@ -32,9 +32,6 @@ type Dial struct {
 	paswd int
 }
 
-// for testing purposes remove once done.
-// var dummy = []string{"R100", "L100", "L100"}
-
 // parseTurn accepts a string containing a direction and amount of clicks the dial must be turned eg."L100"
 // it returns the direction as a string and number of clicks as a int.
 func parseTurn(turn string) (direction string, clicks int) {
@@ -46,31 +43,59 @@ func parseTurn(turn string) (direction string, clicks int) {
 	return
 }
 
+// partOne
 // leftTurn accepts a int value which is the number of clicks the dial must be turned counter clockwise.
+//
+//	func (d *Dial) leftTurn(clicks int) {
+//		for range clicks {
+//			d.startPoint--
+//			if d.startPoint < 0 {
+//				d.startPoint = 99
+//			}
+//		}
+//	}
+//
+// partTwo
 func (d *Dial) leftTurn(clicks int) {
 	for range clicks {
 		d.startPoint--
-		if d.startPoint < 0 {
+		switch {
+		case d.startPoint == 0:
+			d.paswd++
+		case d.startPoint < 0:
 			d.startPoint = 99
 		}
 	}
 }
 
+// partOne
 // rightTurn accepts a int value which is the number of clicks the dial must be turned clockwise.
+//
+//	func (d *Dial) rightTurn(clicks int) {
+//		for range clicks {
+//			d.startPoint++
+//			if d.startPoint > 99 {
+//				d.startPoint = 0
+//			}
+//		}
+//	}
 func (d *Dial) rightTurn(clicks int) {
 	for range clicks {
 		d.startPoint++
-		if d.startPoint > 99 {
+		switch {
+		case d.startPoint > 99:
 			d.startPoint = 0
+			d.paswd++
 		}
 	}
 }
 
-func (d *Dial) evalPass() {
-	if d.startPoint == 0 {
-		d.paswd++
-	}
-}
+// partOne
+// func (d *Dial) evalPass() {
+// 	if d.startPoint == 0 {
+// 		d.paswd++
+// 	}
+// }
 
 func main() {
 	d := Dial{
@@ -83,10 +108,10 @@ func main() {
 		switch dir {
 		case "L":
 			d.leftTurn(clicks)
-			d.evalPass()
+			// d.evalPass()
 		case "R":
 			d.rightTurn(clicks)
-			d.evalPass()
+			// d.evalPass()
 		}
 	}
 	fmt.Println(d.paswd)
